@@ -11,25 +11,38 @@ namespace Events_лаб_13
     /// </summary>
     public class JournalEntry
     {
-        public string CollectionName { get; set; } // название коллекции
-        public string ChangeType { get; set; } // тип изменения
-        public string Data { get; set; } // данные объекта
+        /// <summary>
+        /// название коллекции
+        /// </summary>
+        public string CollectionName { get; set; }
+        /// <summary>
+        /// тип изменения
+        /// </summary>
+        public string ChangeType { get; set; }
+        /// <summary>
+        /// данные объекта
+        /// </summary>
+        public string Data { get; set; }
 
         /// <summary>
-        /// Конструктор с параметрами
+        /// Конструктор с параметрами для журнальной записи
         /// </summary>
-        /// <param name="collectionName"></param>
-        /// <param name="changeType"></param>
-        /// <param name="data"></param>
+        /// <param name="collectionName">название коллекции</param>
+        /// <param name="changeType">тип изменения в коллекции</param>
+        /// <param name="data">данные объекта, который участвовал в изменении</param>
         public JournalEntry(string collectionName, string changeType, string data)
         {
             CollectionName = collectionName; // название коллекции
-            ChangeType = changeType; // тип изменения
-            Data = data; // данные объекта
+            ChangeType = changeType; // тип изменения в коллекции
+            Data = data; // данные объекта, который участвовал в изменении
         }
+        /// <summary>
+        /// Печать журнальной записи
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
-            return $"В коллекции {CollectionName} {ChangeType}. Обьект: {Data}";
+            return Data == null ? "" : $"В коллекции {CollectionName} {ChangeType}. Обьект: {Data}";
         }
     }
 }

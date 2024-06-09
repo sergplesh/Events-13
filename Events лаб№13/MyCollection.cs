@@ -33,15 +33,21 @@ namespace Events_лаб_13
             flags = new int[length]; // в flags столько же ячеек, сколько и в хэш-таблице
         }
 
-        public MyCollection(MyCollection<T> c, double fillRatio = 0.72)
+        public MyCollection(MyCollection<T> c) // по сути можно использовать метод глубокой копии
         {
-            table = new T[c.Count];
-            this.fillRatio = fillRatio;
-            flags = new int[c.Count]; // в flags столько же ячеек, сколько и в хэш-таблице
-            foreach (T item in c)
+            table = new T[c.Capacity];
+            this.fillRatio = c.fillRatio;
+            flags = new int[c.Capacity]; // в flags столько же ячеек, сколько и в хэш-таблице
+            for (int i = 0; i < c.table.Length; i++) // идём по хэш-таблице
             {
-                Add(item);
+                if (c.flags[i] == 1 && c.table[i] != null) // копируем только занятые ячейки
+                {
+                    table[i] = (T)c.table[i].Clone(); // копируем элемент из копируемой хэш-таблицы
+                    flags[i] = c.flags[i];
+                }
+                else flags[i] = c.flags[i];
             }
+            count = c.count;
         }
 
         /// <summary>
@@ -83,7 +89,7 @@ namespace Events_лаб_13
                 throw new ArgumentOutOfRangeException();
             if (array.Length - arrayIndex < Count) // в массиве не хватит места для всех копируемых элементов
                 throw new ArgumentException();
-            int copiedCount = 0; // будем считать количество скопируемых элементов
+            int copiedCount = 0; // будем считать количество скопируемых в массив элементов
             for (int i = 0; i < table.Length; i++) // идём по хэш-таблице
             {
                 if (flags[i] == 1) // копируем только занятые ячейки
