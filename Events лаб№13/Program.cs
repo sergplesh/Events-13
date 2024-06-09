@@ -100,7 +100,8 @@ namespace Events_лаб_13
                 Shape changed = InitShape("Введите фигуру, на которую хотите поменять выбранную");
                 try
                 {
-                    collection[index - 1] = changed;
+                    if (collection[index - 1] != null) collection[index - 1] = changed;
+                    else Console.WriteLine("Вы не можете изменить нулевую ссылку");
                 }
                 catch (Exception ex)
                 {
