@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 using GeometrucShapeCarLibrary;
-using Events_лаб_13;
+using Events_Р»Р°Р±_13;
 
 namespace TestEvent
 {
@@ -12,15 +12,15 @@ namespace TestEvent
         {
             // Arrange
             MyObservableCollection<Shape> collection = new MyObservableCollection<Shape>("TestCollection", 0);
-            bool eventHappened = false; // событие произошло?
+            bool eventHappened = false; // СЃРѕР±С‹С‚РёРµ РїСЂРѕРёР·РѕС€Р»Рѕ?
 
             // Act
             collection.CollectionCountChanged += (sender, args) =>
             {
                 eventHappened = true;
-                Assert.AreEqual("добавлен элемент", args.ChangeType);
+                Assert.AreEqual("РґРѕР±Р°РІР»РµРЅ СЌР»РµРјРµРЅС‚", args.ChangeType);
             };
-            collection.Add(new Shape()); // метод, в котором генерируется событие
+            collection.Add(new Shape()); // РјРµС‚РѕРґ, РІ РєРѕС‚РѕСЂРѕРј РіРµРЅРµСЂРёСЂСѓРµС‚СЃСЏ СЃРѕР±С‹С‚РёРµ
 
             // Assert
             Assert.IsTrue(eventHappened);
@@ -33,13 +33,13 @@ namespace TestEvent
             MyObservableCollection<Shape> collection = new MyObservableCollection<Shape>("TestCollection", 0);
             var shape = new Shape();
             collection.Add(shape);
-            bool eventHappened = false; // событие произошло?
+            bool eventHappened = false; // СЃРѕР±С‹С‚РёРµ РїСЂРѕРёР·РѕС€Р»Рѕ?
 
             // Act
             collection.CollectionCountChanged += (sender, args) =>
             {
                 eventHappened = true;
-                Assert.AreEqual("удален элемент", args.ChangeType);
+                Assert.AreEqual("СѓРґР°Р»РµРЅ СЌР»РµРјРµРЅС‚", args.ChangeType);
             };
 
             // Assert
@@ -48,22 +48,22 @@ namespace TestEvent
         }
 
         [TestMethod]
-        public void IndexerSet_ExistIndex_NullCollectionReferenceChangeEvent() // событие Null
+        public void IndexerSet_ExistIndex_NullCollectionReferenceChangeEvent() // СЃРѕР±С‹С‚РёРµ Null
         {
             // Arrange
             MyObservableCollection<Shape> collection = new MyObservableCollection<Shape>("TestCollection", 1);
-            bool eventHappened = false; // событие произошло?
+            bool eventHappened = false; // СЃРѕР±С‹С‚РёРµ РїСЂРѕРёР·РѕС€Р»Рѕ?
 
             // Act
-            // не подписываем обработчика на событие
+            // РЅРµ РїРѕРґРїРёСЃС‹РІР°РµРј РѕР±СЂР°Р±РѕС‚С‡РёРєР° РЅР° СЃРѕР±С‹С‚РёРµ
 
             // Assert
             collection[0] = new Shape();
-            // подписываемся после обращения к событию
+            // РїРѕРґРїРёСЃС‹РІР°РµРјСЃСЏ РїРѕСЃР»Рµ РѕР±СЂР°С‰РµРЅРёСЏ Рє СЃРѕР±С‹С‚РёСЋ
             collection.CollectionReferenceChanged += (sender, args) =>
             {
                 eventHappened = true;
-                Assert.AreEqual("изменён элемент на", args.ChangeType);
+                Assert.AreEqual("РёР·РјРµРЅС‘РЅ СЌР»РµРјРµРЅС‚ РЅР°", args.ChangeType);
             };
             Assert.IsFalse(eventHappened);
         }
@@ -73,13 +73,13 @@ namespace TestEvent
         {
             // Arrange
             MyObservableCollection<Shape> collection = new MyObservableCollection<Shape>("TestCollection", 1);
-            bool eventHappened = false; // событие произошло?
+            bool eventHappened = false; // СЃРѕР±С‹С‚РёРµ РїСЂРѕРёР·РѕС€Р»Рѕ?
 
             // Act
             collection.CollectionReferenceChanged += (sender, args) =>
             {
                 eventHappened = true;
-                Assert.AreEqual("изменён элемент на", args.ChangeType);
+                Assert.AreEqual("РёР·РјРµРЅС‘РЅ СЌР»РµРјРµРЅС‚ РЅР°", args.ChangeType);
             };
 
             // Assert
@@ -88,17 +88,17 @@ namespace TestEvent
         }
 
         [TestMethod]
-        public void IndexerSet_NotExistIndex_CollectionReferenceChangeEvent() // несуществующий индекс set
+        public void IndexerSet_NotExistIndex_CollectionReferenceChangeEvent() // РЅРµСЃСѓС‰РµСЃС‚РІСѓСЋС‰РёР№ РёРЅРґРµРєСЃ set
         {
             // Arrange
             MyObservableCollection<Shape> collection = new MyObservableCollection<Shape>("TestCollection", 1);
-            bool eventHappened = false; // событие произошло?
+            bool eventHappened = false; // СЃРѕР±С‹С‚РёРµ РїСЂРѕРёР·РѕС€Р»Рѕ?
 
             // Act
             collection.CollectionReferenceChanged += (sender, args) =>
             {
                 eventHappened = true;
-                Assert.AreEqual("изменён элемент на", args.ChangeType);
+                Assert.AreEqual("РёР·РјРµРЅС‘РЅ СЌР»РµРјРµРЅС‚ РЅР°", args.ChangeType);
             };
 
             // Assert
@@ -107,17 +107,17 @@ namespace TestEvent
         }
 
         [TestMethod]
-        public void IndexerSet_NegativeIndex_CollectionReferenceChangeEvent() // отрицательный индекс set
+        public void IndexerSet_NegativeIndex_CollectionReferenceChangeEvent() // РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹Р№ РёРЅРґРµРєСЃ set
         {
             // Arrange
             MyObservableCollection<Shape> collection = new MyObservableCollection<Shape>("TestCollection", 1);
-            bool eventHappened = false; // событие произошло?
+            bool eventHappened = false; // СЃРѕР±С‹С‚РёРµ РїСЂРѕРёР·РѕС€Р»Рѕ?
 
             // Act
             collection.CollectionReferenceChanged += (sender, args) =>
             {
                 eventHappened = true;
-                Assert.AreEqual("изменён элемент на", args.ChangeType);
+                Assert.AreEqual("РёР·РјРµРЅС‘РЅ СЌР»РµРјРµРЅС‚ РЅР°", args.ChangeType);
             };
 
             // Assert
@@ -140,7 +140,7 @@ namespace TestEvent
         }
 
         [TestMethod]
-        public void IndexerGet_NotExistIndex_CollectionReferenceChangeEvent() // несуществующий индекс get
+        public void IndexerGet_NotExistIndex_CollectionReferenceChangeEvent() // РЅРµСЃСѓС‰РµСЃС‚РІСѓСЋС‰РёР№ РёРЅРґРµРєСЃ get
         {
             // Arrange
             MyObservableCollection<Shape> collection = new MyObservableCollection<Shape>("TestCollection", 1);
@@ -150,7 +150,7 @@ namespace TestEvent
         }
 
         [TestMethod]
-        public void IndexerGet_NegativeIndex_CollectionReferenceChangeEvent() // отрицательный индекс get
+        public void IndexerGet_NegativeIndex_CollectionReferenceChangeEvent() // РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹Р№ РёРЅРґРµРєСЃ get
         {
             // Arrange
             MyObservableCollection<Shape> collection = new MyObservableCollection<Shape>("TestCollection", 1);
@@ -191,7 +191,7 @@ namespace TestEvent
         public void ToString_ReturnFormattedString()
         {
             JournalEntry entry = new JournalEntry("TestCollection", "TestChange", "TestData");
-            string expectedString = "В коллекции TestCollection TestChange. Обьект: TestData";
+            string expectedString = "Р’ РєРѕР»Р»РµРєС†РёРё TestCollection TestChange. РћР±СЊРµРєС‚: TestData";
 
             Assert.AreEqual(expectedString, entry.ToString());
         }
@@ -210,7 +210,7 @@ namespace TestEvent
     public class JournalTests
     {
         [TestMethod]
-        public void TestMethod_WriteRecord() //Добавление записи в журнал
+        public void TestMethod_WriteRecord() //Р”РѕР±Р°РІР»РµРЅРёРµ Р·Р°РїРёСЃРё РІ Р¶СѓСЂРЅР°Р»
         {
             // Arrange
             Journal<Shape> journal = new Journal<Shape>();
@@ -218,7 +218,7 @@ namespace TestEvent
 
             // Act
             Shape shape = new Shape();
-            journal.WriteRecord(collection, new CollectionHandlerEventArgs("добавлен элемент", shape));
+            journal.WriteRecord(collection, new CollectionHandlerEventArgs("РґРѕР±Р°РІР»РµРЅ СЌР»РµРјРµРЅС‚", shape));
 
             // Assert
             Assert.AreEqual(1, journal.Count);
@@ -254,17 +254,17 @@ namespace TestEvent
 
 
 
-    // ТЕСТЫ ДЛЯ MyCollection
+    // РўР•РЎРўР« Р”Р›РЇ MyCollection
     [TestClass]
     public class UnitTestCollection
     {
         [TestMethod]
-        public void Clear_RemovesAllElementsFromCollection() // удаление коллекции
+        public void Clear_RemovesAllElementsFromCollection() // СѓРґР°Р»РµРЅРёРµ РєРѕР»Р»РµРєС†РёРё
         {
             // Arrange
             MyCollection<Shape> collection = new MyCollection<Shape>();
-            Shape element1 = new Shape("елемент1", 1);
-            Shape element2 = new Shape("елемент2", 2);
+            Shape element1 = new Shape("РµР»РµРјРµРЅС‚1", 1);
+            Shape element2 = new Shape("РµР»РµРјРµРЅС‚2", 2);
             collection.Add(element1);
             collection.Add(element2);
 
@@ -278,12 +278,12 @@ namespace TestEvent
         }
 
         [TestMethod]
-        public void CopyTo_CopiesElementsToArray() // копирование элементов коллекции в массив
+        public void CopyTo_CopiesElementsToArray() // РєРѕРїРёСЂРѕРІР°РЅРёРµ СЌР»РµРјРµРЅС‚РѕРІ РєРѕР»Р»РµРєС†РёРё РІ РјР°СЃСЃРёРІ
         {
             // Arrange
             MyCollection<Shape> collection = new MyCollection<Shape>(1);
-            collection.Add(new Shape("елемент1", 1));
-            collection.Add(new Shape("елемент2", 2));
+            collection.Add(new Shape("РµР»РµРјРµРЅС‚1", 1));
+            collection.Add(new Shape("РµР»РµРјРµРЅС‚2", 2));
             int index = 0;
             Shape[] array = new Shape[collection.Count + index];
 
@@ -300,7 +300,7 @@ namespace TestEvent
         }
 
         [TestMethod]
-        public void CopyTo_ThrowsArgumentNullException_ArrayNull() // Исключение для null-массива в CopyTo
+        public void CopyTo_ThrowsArgumentNullException_ArrayNull() // РСЃРєР»СЋС‡РµРЅРёРµ РґР»СЏ null-РјР°СЃСЃРёРІР° РІ CopyTo
         {
             // Arrange
             MyCollection<Shape> collection = new MyCollection<Shape>();
@@ -311,7 +311,7 @@ namespace TestEvent
         }
 
         [TestMethod]
-        public void CopyTo_ThrowsArgumentOutOfRangeException_IndexIsNegative() // Исключение для отрицательного индекса в CopyTo
+        public void CopyTo_ThrowsArgumentOutOfRangeException_IndexIsNegative() // РСЃРєР»СЋС‡РµРЅРёРµ РґР»СЏ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРіРѕ РёРЅРґРµРєСЃР° РІ CopyTo
         {
             // Arrange
             MyCollection<Shape> collection = new MyCollection<Shape>();
@@ -322,12 +322,12 @@ namespace TestEvent
         }
 
         [TestMethod]
-        public void CopyTo_ThrowsArgumentException_ArrayTooSmall() // Исключение в CopyTo, если в массив не уместятся все элементы в коллекции
+        public void CopyTo_ThrowsArgumentException_ArrayTooSmall() // РСЃРєР»СЋС‡РµРЅРёРµ РІ CopyTo, РµСЃР»Рё РІ РјР°СЃСЃРёРІ РЅРµ СѓРјРµСЃС‚СЏС‚СЃСЏ РІСЃРµ СЌР»РµРјРµРЅС‚С‹ РІ РєРѕР»Р»РµРєС†РёРё
         {
             // Arrange
             MyCollection<Shape> collection = new MyCollection<Shape>();
-            Shape element1 = new Shape("елемент1", 1);
-            Shape element2 = new Shape("елемент2", 2);
+            Shape element1 = new Shape("РµР»РµРјРµРЅС‚1", 1);
+            Shape element2 = new Shape("РµР»РµРјРµРЅС‚2", 2);
             collection.Add(element1);
             collection.Add(element2);
             Shape[] array = new Shape[1];
@@ -337,12 +337,12 @@ namespace TestEvent
         }
 
         [TestMethod]
-        public void Constructor_CreatesCollectionWithSameElements() // конструктор копирования
+        public void Constructor_CreatesCollectionWithSameElements() // РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
         {
             // Arrange
             MyCollection<Shape> originalCollection = new MyCollection<Shape>();
-            Shape element1 = new Shape("елемент1", 1);
-            Shape element2 = new Shape("елемент2", 2);
+            Shape element1 = new Shape("РµР»РµРјРµРЅС‚1", 1);
+            Shape element2 = new Shape("РµР»РµРјРµРЅС‚2", 2);
             originalCollection.Add(element1);
             originalCollection.Add(element2);
 
@@ -359,91 +359,91 @@ namespace TestEvent
         }
 
         [TestMethod]
-        public void TestRemoveItemCollection_Existent() // Удаление существующего в хэш-таблице элемента
+        public void TestRemoveItemCollection_Existent() // РЈРґР°Р»РµРЅРёРµ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РµРіРѕ РІ С…СЌС€-С‚Р°Р±Р»РёС†Рµ СЌР»РµРјРµРЅС‚Р°
         {
             // Arrange
             MyCollection<Shape> collection = new MyCollection<Shape>();
-            collection.Add(new Shape("элемент", 1));
-            collection.Add(new Shape("элемент", 2));
+            collection.Add(new Shape("СЌР»РµРјРµРЅС‚", 1));
+            collection.Add(new Shape("СЌР»РµРјРµРЅС‚", 2));
 
             // Act
-            bool removed = collection.Remove(new Shape("элемент", 2));
+            bool removed = collection.Remove(new Shape("СЌР»РµРјРµРЅС‚", 2));
 
             // Assert
             Assert.IsTrue(removed);
-            Assert.IsFalse(collection.Contains(new Shape("элемент", 2))); // убедимся, что элемент удалён
+            Assert.IsFalse(collection.Contains(new Shape("СЌР»РµРјРµРЅС‚", 2))); // СѓР±РµРґРёРјСЃСЏ, С‡С‚Рѕ СЌР»РµРјРµРЅС‚ СѓРґР°Р»С‘РЅ
         }
 
         [TestMethod]
-        public void TestRemoveItemCollection_NonExistent() // Удаление НЕ существующего в хэш-таблице элемента
+        public void TestRemoveItemCollection_NonExistent() // РЈРґР°Р»РµРЅРёРµ РќР• СЃСѓС‰РµСЃС‚РІСѓСЋС‰РµРіРѕ РІ С…СЌС€-С‚Р°Р±Р»РёС†Рµ СЌР»РµРјРµРЅС‚Р°
         {
             // Arrange
             MyCollection<Shape> collection = new MyCollection<Shape>();
-            collection.AddItem(new Shape("элемент", 1));
-            collection.AddItem(new Shape("элемент", 2));
+            collection.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 1));
+            collection.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 2));
 
             // Act
-            bool notAdded = collection.Remove(new Shape("элемент", 100)); // попытка удаления элемента, который не был добавлен
+            bool notAdded = collection.Remove(new Shape("СЌР»РµРјРµРЅС‚", 100)); // РїРѕРїС‹С‚РєР° СѓРґР°Р»РµРЅРёСЏ СЌР»РµРјРµРЅС‚Р°, РєРѕС‚РѕСЂС‹Р№ РЅРµ Р±С‹Р» РґРѕР±Р°РІР»РµРЅ
 
             // Assert
-            Assert.IsFalse(notAdded); // удаление не произошло
+            Assert.IsFalse(notAdded); // СѓРґР°Р»РµРЅРёРµ РЅРµ РїСЂРѕРёР·РѕС€Р»Рѕ
         }
 
         [TestMethod]
-        public void DeepCopyCollection() // тест для глубокой копии коллекции
+        public void DeepCopyCollection() // С‚РµСЃС‚ РґР»СЏ РіР»СѓР±РѕРєРѕР№ РєРѕРїРёРё РєРѕР»Р»РµРєС†РёРё
         {
             // Arrange
             MyCollection<Shape> collection = new MyCollection<Shape>();
-            for (int i = 0; i < 5; i++) // случайно инициализируем исходную коллекцию
+            for (int i = 0; i < 5; i++) // СЃР»СѓС‡Р°Р№РЅРѕ РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј РёСЃС…РѕРґРЅСѓСЋ РєРѕР»Р»РµРєС†РёСЋ
             {
                 Shape s = new Shape();
                 s.RandomInit();
-                collection.Add(s); // добавляем в хэш-таблицу
+                collection.Add(s); // РґРѕР±Р°РІР»СЏРµРј РІ С…СЌС€-С‚Р°Р±Р»РёС†Сѓ
             }
             MyCollection<Shape> deepCopy = collection.DeepCopy();
 
             // Act
-            foreach (Shape shape in deepCopy) // Изменим все значения в поверхностной копии на <Бабочка>
-                shape.Name = "Бабочка";
+            foreach (Shape shape in deepCopy) // РР·РјРµРЅРёРј РІСЃРµ Р·РЅР°С‡РµРЅРёСЏ РІ РїРѕРІРµСЂС…РЅРѕСЃС‚РЅРѕР№ РєРѕРїРёРё РЅР° <Р‘Р°Р±РѕС‡РєР°>
+                shape.Name = "Р‘Р°Р±РѕС‡РєР°";
 
             // Assert
-            // только в глубокой копии элементы должны были поменять название, в исходной должны были остаться без изменений
+            // С‚РѕР»СЊРєРѕ РІ РіР»СѓР±РѕРєРѕР№ РєРѕРїРёРё СЌР»РµРјРµРЅС‚С‹ РґРѕР»Р¶РЅС‹ Р±С‹Р»Рё РїРѕРјРµРЅСЏС‚СЊ РЅР°Р·РІР°РЅРёРµ, РІ РёСЃС…РѕРґРЅРѕР№ РґРѕР»Р¶РЅС‹ Р±С‹Р»Рё РѕСЃС‚Р°С‚СЊСЃСЏ Р±РµР· РёР·РјРµРЅРµРЅРёР№
             foreach (Shape shape in collection)
             {
-                Assert.AreNotEqual(shape.Name, "Бабочка");
+                Assert.AreNotEqual(shape.Name, "Р‘Р°Р±РѕС‡РєР°");
             }
             foreach (Shape shape in deepCopy)
             {
-                Assert.AreEqual(shape.Name, "Бабочка");
+                Assert.AreEqual(shape.Name, "Р‘Р°Р±РѕС‡РєР°");
             }
         }
 
         [TestMethod]
-        public void ShallowCopyCollection() // тест для поверхностной копии коллекции
+        public void ShallowCopyCollection() // С‚РµСЃС‚ РґР»СЏ РїРѕРІРµСЂС…РЅРѕСЃС‚РЅРѕР№ РєРѕРїРёРё РєРѕР»Р»РµРєС†РёРё
         {
             // Arrange
             MyCollection<Shape> collection = new MyCollection<Shape>();
-            for (int i = 0; i < 5; i++) // случайно инициализируем исходную коллекцию
+            for (int i = 0; i < 5; i++) // СЃР»СѓС‡Р°Р№РЅРѕ РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј РёСЃС…РѕРґРЅСѓСЋ РєРѕР»Р»РµРєС†РёСЋ
             {
                 Shape s = new Shape();
                 s.RandomInit();
-                collection.Add(s); // добавляем в хэш-таблицу
+                collection.Add(s); // РґРѕР±Р°РІР»СЏРµРј РІ С…СЌС€-С‚Р°Р±Р»РёС†Сѓ
             }
             MyCollection<Shape> shallowCopy = collection.ShallowCopy();
 
             // Act
-            foreach (Shape shape in shallowCopy) // Изменим все значения в поверхностной копии на <Бабочка>
-                shape.Name = "Бабочка";
+            foreach (Shape shape in shallowCopy) // РР·РјРµРЅРёРј РІСЃРµ Р·РЅР°С‡РµРЅРёСЏ РІ РїРѕРІРµСЂС…РЅРѕСЃС‚РЅРѕР№ РєРѕРїРёРё РЅР° <Р‘Р°Р±РѕС‡РєР°>
+                shape.Name = "Р‘Р°Р±РѕС‡РєР°";
 
             // Assert
-            // и в исходной коллекции, и в поверхностной копии все элементы должны иметь название "Бабочка"
+            // Рё РІ РёСЃС…РѕРґРЅРѕР№ РєРѕР»Р»РµРєС†РёРё, Рё РІ РїРѕРІРµСЂС…РЅРѕСЃС‚РЅРѕР№ РєРѕРїРёРё РІСЃРµ СЌР»РµРјРµРЅС‚С‹ РґРѕР»Р¶РЅС‹ РёРјРµС‚СЊ РЅР°Р·РІР°РЅРёРµ "Р‘Р°Р±РѕС‡РєР°"
             foreach (Shape shape in collection)
             {
-                Assert.AreEqual(shape.Name, "Бабочка");
+                Assert.AreEqual(shape.Name, "Р‘Р°Р±РѕС‡РєР°");
             }
             foreach (Shape shape in shallowCopy)
             {
-                Assert.AreEqual(shape.Name, "Бабочка");
+                Assert.AreEqual(shape.Name, "Р‘Р°Р±РѕС‡РєР°");
             }
         }
 
@@ -455,8 +455,8 @@ namespace TestEvent
             int exceptedCount = 2;
 
             // Act
-            Shape element1 = new Shape("елемент1", 1);
-            Shape element2 = new Shape("елемент2", 2);
+            Shape element1 = new Shape("РµР»РµРјРµРЅС‚1", 1);
+            Shape element2 = new Shape("РµР»РµРјРµРЅС‚2", 2);
             collection.Add(element1);
             collection.Add(element2);
 
@@ -465,13 +465,13 @@ namespace TestEvent
             foreach (Shape shape in collection)
             {
                 i++;
-                if (shape.id.Number == i) Assert.AreEqual(shape, new Shape("елемент" + i.ToString(), i));
+                if (shape.id.Number == i) Assert.AreEqual(shape, new Shape("РµР»РµРјРµРЅС‚" + i.ToString(), i));
             }
             Assert.AreEqual(exceptedCount, i);
         }
 
         [TestMethod]
-        public void IsReadOnly_ReturnsFalse() // тест для свойства isReadOnly
+        public void IsReadOnly_ReturnsFalse() // С‚РµСЃС‚ РґР»СЏ СЃРІРѕР№СЃС‚РІР° isReadOnly
         {
             // Arrange
             MyCollection<Shape> collection = new MyCollection<Shape>();
@@ -497,155 +497,155 @@ namespace TestEvent
 
 
 
-        // ТЕСТЫ ДЛЯ ХЭШ ТАБЛИЦЫ
+        // РўР•РЎРўР« Р”Р›РЇ РҐР­РЁ РўРђР‘Р›РР¦Р«
         [TestClass]
         public class UnitTestHash
         {
             [TestMethod]
-            public void TestAddItem_DifferentObjects() // Добавление отличающихся друг от друга объектов
+            public void TestAddItem_DifferentObjects() // Р”РѕР±Р°РІР»РµРЅРёРµ РѕС‚Р»РёС‡Р°СЋС‰РёС…СЃСЏ РґСЂСѓРі РѕС‚ РґСЂСѓРіР° РѕР±СЉРµРєС‚РѕРІ
             {
                 // Arrange
                 MyHashTable<Shape> hashTable = new MyHashTable<Shape>();
                 int expectedCount = 3;
 
                 // Act
-                hashTable.AddItem(new Shape("элемент", 1));
-                hashTable.AddItem(new Shape("элемент", 2));
-                hashTable.AddItem(new Shape("элемент", 3));
+                hashTable.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 1));
+                hashTable.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 2));
+                hashTable.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 3));
 
                 // Assert
-                // все элементы разные - должны все добавиться
+                // РІСЃРµ СЌР»РµРјРµРЅС‚С‹ СЂР°Р·РЅС‹Рµ - РґРѕР»Р¶РЅС‹ РІСЃРµ РґРѕР±Р°РІРёС‚СЊСЃСЏ
                 Assert.AreEqual(expectedCount, hashTable.Count);
             }
 
             [TestMethod]
-            public void TestAddItem_ZeroCapacity() // Добавление элемента в хэш-таблицу нулевой размерности
+            public void TestAddItem_ZeroCapacity() // Р”РѕР±Р°РІР»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РІ С…СЌС€-С‚Р°Р±Р»РёС†Сѓ РЅСѓР»РµРІРѕР№ СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё
             {
                 // Arrange
                 MyHashTable<Shape> hashTable = new MyHashTable<Shape>(0);
                 int expectedCount = 3;
 
                 // Act
-                hashTable.AddItem(new Shape("элемент", 1));
-                hashTable.AddItem(new Shape("элемент", 2));
-                hashTable.AddItem(new Shape("элемент", 3));
+                hashTable.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 1));
+                hashTable.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 2));
+                hashTable.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 3));
 
                 // Assert
-                // все элементы разные - должны все добавиться
+                // РІСЃРµ СЌР»РµРјРµРЅС‚С‹ СЂР°Р·РЅС‹Рµ - РґРѕР»Р¶РЅС‹ РІСЃРµ РґРѕР±Р°РІРёС‚СЊСЃСЏ
                 Assert.AreEqual(expectedCount, hashTable.Count);
             }
 
             [TestMethod]
-            public void TestAddItem_SimilarObjects() // Добавление одинаковых объектов
+            public void TestAddItem_SimilarObjects() // Р”РѕР±Р°РІР»РµРЅРёРµ РѕРґРёРЅР°РєРѕРІС‹С… РѕР±СЉРµРєС‚РѕРІ
             {
                 // Arrange
                 MyHashTable<Shape> hashTable = new MyHashTable<Shape>();
                 int expectedCount = 1;
 
                 // Act
-                hashTable.AddItem(new Shape("элемент", 0));
-                hashTable.AddItem(new Shape("элемент", 0));
-                hashTable.AddItem(new Shape("элемент", 0));
+                hashTable.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 0));
+                hashTable.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 0));
+                hashTable.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 0));
 
                 // Assert
-                // все элементы одинаковые - в хэш-таблице должен быть один элемент
+                // РІСЃРµ СЌР»РµРјРµРЅС‚С‹ РѕРґРёРЅР°РєРѕРІС‹Рµ - РІ С…СЌС€-С‚Р°Р±Р»РёС†Рµ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РѕРґРёРЅ СЌР»РµРјРµРЅС‚
                 Assert.AreEqual(expectedCount, hashTable.Count);
 
             }
 
             [TestMethod]
-            public void TestRemoveItem_Existent() // Удаление существующего в хэш-таблице элемента
+            public void TestRemoveItem_Existent() // РЈРґР°Р»РµРЅРёРµ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РµРіРѕ РІ С…СЌС€-С‚Р°Р±Р»РёС†Рµ СЌР»РµРјРµРЅС‚Р°
             {
                 // Arrange
                 MyHashTable<Shape> hashTable = new MyHashTable<Shape>();
-                hashTable.AddItem(new Shape("элемент", 1));
-                hashTable.AddItem(new Shape("элемент", 2));
+                hashTable.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 1));
+                hashTable.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 2));
 
                 // Act
-                bool removed = hashTable.RemoveData(new Shape("элемент", 2));
+                bool removed = hashTable.RemoveData(new Shape("СЌР»РµРјРµРЅС‚", 2));
 
                 // Assert
                 Assert.IsTrue(removed);
-                Assert.IsFalse(hashTable.Contains(new Shape("элемент", 2))); // убедимся, что элемент удалён
+                Assert.IsFalse(hashTable.Contains(new Shape("СЌР»РµРјРµРЅС‚", 2))); // СѓР±РµРґРёРјСЃСЏ, С‡С‚Рѕ СЌР»РµРјРµРЅС‚ СѓРґР°Р»С‘РЅ
             }
 
             [TestMethod]
-            public void TestRemoveItem_NonExistent() // Удаление НЕ существующего в хэш-таблице элемента
+            public void TestRemoveItem_NonExistent() // РЈРґР°Р»РµРЅРёРµ РќР• СЃСѓС‰РµСЃС‚РІСѓСЋС‰РµРіРѕ РІ С…СЌС€-С‚Р°Р±Р»РёС†Рµ СЌР»РµРјРµРЅС‚Р°
             {
                 // Arrange
                 MyHashTable<Shape> hashTable = new MyHashTable<Shape>();
-                hashTable.AddItem(new Shape("элемент", 1));
-                hashTable.AddItem(new Shape("элемент", 2));
+                hashTable.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 1));
+                hashTable.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 2));
 
                 // Act
-                bool notAdded = hashTable.RemoveData(new Shape("элемент", 100)); // попытка удаления элемента, который не был добавлен
+                bool notAdded = hashTable.RemoveData(new Shape("СЌР»РµРјРµРЅС‚", 100)); // РїРѕРїС‹С‚РєР° СѓРґР°Р»РµРЅРёСЏ СЌР»РµРјРµРЅС‚Р°, РєРѕС‚РѕСЂС‹Р№ РЅРµ Р±С‹Р» РґРѕР±Р°РІР»РµРЅ
 
                 // Assert
-                Assert.IsFalse(notAdded); // удаление не произошло
+                Assert.IsFalse(notAdded); // СѓРґР°Р»РµРЅРёРµ РЅРµ РїСЂРѕРёР·РѕС€Р»Рѕ
             }
 
             [TestMethod]
-            public void TestContains_Existent() // Проверка присутствия существующего в хэш-таблице элемента
+            public void TestContains_Existent() // РџСЂРѕРІРµСЂРєР° РїСЂРёСЃСѓС‚СЃС‚РІРёСЏ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РµРіРѕ РІ С…СЌС€-С‚Р°Р±Р»РёС†Рµ СЌР»РµРјРµРЅС‚Р°
             {
                 // Arrange
                 MyHashTable<Shape> hashTable = new MyHashTable<Shape>();
-                hashTable.AddItem(new Shape("элемент", 1));
-                hashTable.AddItem(new Shape("элемент", 2));
+                hashTable.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 1));
+                hashTable.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 2));
 
                 // Act
-                bool isExist = hashTable.Contains(new Shape("элемент", 1));
+                bool isExist = hashTable.Contains(new Shape("СЌР»РµРјРµРЅС‚", 1));
 
                 // Assert
-                Assert.IsTrue(isExist); // элемент есть в таблице
+                Assert.IsTrue(isExist); // СЌР»РµРјРµРЅС‚ РµСЃС‚СЊ РІ С‚Р°Р±Р»РёС†Рµ
             }
 
             [TestMethod]
-            public void TestContains_NonExistent() // Проверка отсутствия НЕ существующего в хэш-таблице элемента
+            public void TestContains_NonExistent() // РџСЂРѕРІРµСЂРєР° РѕС‚СЃСѓС‚СЃС‚РІРёСЏ РќР• СЃСѓС‰РµСЃС‚РІСѓСЋС‰РµРіРѕ РІ С…СЌС€-С‚Р°Р±Р»РёС†Рµ СЌР»РµРјРµРЅС‚Р°
             {
                 // Arrange
                 MyHashTable<Shape> hashTable = new MyHashTable<Shape>();
-                hashTable.AddItem(new Shape("элемент", 1));
-                hashTable.AddItem(new Shape("элемент", 2));
+                hashTable.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 1));
+                hashTable.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 2));
 
                 // Act
-                bool isNotExist = hashTable.Contains(new Shape("элемент", 100)); // попытка найти отсутствующий элемент
+                bool isNotExist = hashTable.Contains(new Shape("СЌР»РµРјРµРЅС‚", 100)); // РїРѕРїС‹С‚РєР° РЅР°Р№С‚Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‰РёР№ СЌР»РµРјРµРЅС‚
 
                 // Assert
-                Assert.IsFalse(isNotExist); // элемента нет в таблице
+                Assert.IsFalse(isNotExist); // СЌР»РµРјРµРЅС‚Р° РЅРµС‚ РІ С‚Р°Р±Р»РёС†Рµ
             }
 
             [TestMethod]
-            public void TestFindItem_NonExistent() // Поиск НЕ существующего в хэш-таблице элемента
+            public void TestFindItem_NonExistent() // РџРѕРёСЃРє РќР• СЃСѓС‰РµСЃС‚РІСѓСЋС‰РµРіРѕ РІ С…СЌС€-С‚Р°Р±Р»РёС†Рµ СЌР»РµРјРµРЅС‚Р°
             {
                 // Arrange
                 MyHashTable<Shape> hashTable = new MyHashTable<Shape>();
-                hashTable.AddItem(new Shape("элемент", 1));
-                hashTable.AddItem(new Shape("элемент", 2));
+                hashTable.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 1));
+                hashTable.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 2));
 
                 // Act
-                int NotExist = hashTable.FindItem(new Shape("элемент", 100)); // попытка найти отсутствующий элемент
+                int NotExist = hashTable.FindItem(new Shape("СЌР»РµРјРµРЅС‚", 100)); // РїРѕРїС‹С‚РєР° РЅР°Р№С‚Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‰РёР№ СЌР»РµРјРµРЅС‚
 
                 // Assert
-                Assert.IsTrue(NotExist == -1); // элемента нет в таблице
+                Assert.IsTrue(NotExist == -1); // СЌР»РµРјРµРЅС‚Р° РЅРµС‚ РІ С‚Р°Р±Р»РёС†Рµ
             }
 
             [TestMethod]
-            public void TestResize() // Превышение коэффициента заполненности и увеличение размерности хэш-таблицы
+            public void TestResize() // РџСЂРµРІС‹С€РµРЅРёРµ РєРѕСЌС„С„РёС†РёРµРЅС‚Р° Р·Р°РїРѕР»РЅРµРЅРЅРѕСЃС‚Рё Рё СѓРІРµР»РёС‡РµРЅРёРµ СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё С…СЌС€-С‚Р°Р±Р»РёС†С‹
             {
                 // Arrange
-                MyHashTable<Shape> hashTable = new MyHashTable<Shape>(2); // начальный размер 2
+                MyHashTable<Shape> hashTable = new MyHashTable<Shape>(2); // РЅР°С‡Р°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ 2
                 int expectedSize = 4;
 
                 // Act
-                hashTable.AddItem(new Shape("элемент", 1));
-                hashTable.AddItem(new Shape("элемент", 2));
+                hashTable.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 1));
+                hashTable.AddItem(new Shape("СЌР»РµРјРµРЅС‚", 2));
 
                 // Assert
-                Assert.AreEqual(expectedSize, hashTable.Capacity); // размер должен увеличиться в два раза, до 4
+                Assert.AreEqual(expectedSize, hashTable.Capacity); // СЂР°Р·РјРµСЂ РґРѕР»Р¶РµРЅ СѓРІРµР»РёС‡РёС‚СЊСЃСЏ РІ РґРІР° СЂР°Р·Р°, РґРѕ 4
             }
 
             [TestMethod]
-            public void TestAddItem_NullObject() // Добавление null-объекта
+            public void TestAddItem_NullObject() // Р”РѕР±Р°РІР»РµРЅРёРµ null-РѕР±СЉРµРєС‚Р°
             {
                 // Arrange
                 MyHashTable<Shape> hashTable = new MyHashTable<Shape>();
@@ -659,130 +659,130 @@ namespace TestEvent
             }
 
             [TestMethod]
-            public void TestAddItem_СollisionAfter() // Коллизия и вставка элемента ПОСЛЕ своего индекса
+            public void TestAddItem_РЎollisionAfter() // РљРѕР»Р»РёР·РёСЏ Рё РІСЃС‚Р°РІРєР° СЌР»РµРјРµРЅС‚Р° РџРћРЎР›Р• СЃРІРѕРµРіРѕ РёРЅРґРµРєСЃР°
             {
                 // Arrange
-                MyHashTable<Shape> hashTable = new MyHashTable<Shape>(10, 1); // чтобы увеличить возможность коллизии, увеличим коэффициент заполненности таблицы
-                int place; // место, куда встанет элемент, претерпевший коллизию
-                Shape temp = new Shape(); // с помощью данной переменной запомним этот коллизионный элемент
+                MyHashTable<Shape> hashTable = new MyHashTable<Shape>(10, 1); // С‡С‚РѕР±С‹ СѓРІРµР»РёС‡РёС‚СЊ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ РєРѕР»Р»РёР·РёРё, СѓРІРµР»РёС‡РёРј РєРѕСЌС„С„РёС†РёРµРЅС‚ Р·Р°РїРѕР»РЅРµРЅРЅРѕСЃС‚Рё С‚Р°Р±Р»РёС†С‹
+                int place; // РјРµСЃС‚Рѕ, РєСѓРґР° РІСЃС‚Р°РЅРµС‚ СЌР»РµРјРµРЅС‚, РїСЂРµС‚РµСЂРїРµРІС€РёР№ РєРѕР»Р»РёР·РёСЋ
+                Shape temp = new Shape(); // СЃ РїРѕРјРѕС‰СЊСЋ РґР°РЅРЅРѕР№ РїРµСЂРµРјРµРЅРЅРѕР№ Р·Р°РїРѕРјРЅРёРј СЌС‚РѕС‚ РєРѕР»Р»РёР·РёРѕРЅРЅС‹Р№ СЌР»РµРјРµРЅС‚
 
                 // Act
                 while (true)
                 {
-                    // создаём новый элемент для добавления
+                    // СЃРѕР·РґР°С‘Рј РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ
                     Shape shape = new Shape();
                     shape.RandomInit();
-                    // произошла коллизия:
+                    // РїСЂРѕРёР·РѕС€Р»Р° РєРѕР»Р»РёР·РёСЏ:
                     if (hashTable.flags[hashTable.GetIndex(shape)] == 1)
                     {
-                        // ищем место, куда в итоге встанет добавляемый элемент
+                        // РёС‰РµРј РјРµСЃС‚Рѕ, РєСѓРґР° РІ РёС‚РѕРіРµ РІСЃС‚Р°РЅРµС‚ РґРѕР±Р°РІР»СЏРµРјС‹Р№ СЌР»РµРјРµРЅС‚
                         place = hashTable.SearchPlace(hashTable.GetIndex(shape));
-                        // если он встал после предназначенного ему места, то выходим из цикла
+                        // РµСЃР»Рё РѕРЅ РІСЃС‚Р°Р» РїРѕСЃР»Рµ РїСЂРµРґРЅР°Р·РЅР°С‡РµРЅРЅРѕРіРѕ РµРјСѓ РјРµСЃС‚Р°, С‚Рѕ РІС‹С…РѕРґРёРј РёР· С†РёРєР»Р°
                         if (place > hashTable.GetIndex(shape))
                         {
                             temp = shape;
                             break;
                         }
                     }
-                    // добавляем очередной элемент
+                    // РґРѕР±Р°РІР»СЏРµРј РѕС‡РµСЂРµРґРЅРѕР№ СЌР»РµРјРµРЅС‚
                     hashTable.AddItem(shape);
                 }
 
                 // Assert
-                Assert.IsTrue(hashTable.flags[hashTable.GetIndex(temp)] == 1); // назначенное место найденного элемента для нашего тестируемого случая оказалось занято
-                Assert.IsTrue(place > hashTable.GetIndex(temp)); // встал после назначенного места
+                Assert.IsTrue(hashTable.flags[hashTable.GetIndex(temp)] == 1); // РЅР°Р·РЅР°С‡РµРЅРЅРѕРµ РјРµСЃС‚Рѕ РЅР°Р№РґРµРЅРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РґР»СЏ РЅР°С€РµРіРѕ С‚РµСЃС‚РёСЂСѓРµРјРѕРіРѕ СЃР»СѓС‡Р°СЏ РѕРєР°Р·Р°Р»РѕСЃСЊ Р·Р°РЅСЏС‚Рѕ
+                Assert.IsTrue(place > hashTable.GetIndex(temp)); // РІСЃС‚Р°Р» РїРѕСЃР»Рµ РЅР°Р·РЅР°С‡РµРЅРЅРѕРіРѕ РјРµСЃС‚Р°
             }
 
             [TestMethod]
-            public void TestAddItem_СollisionBefore() // Коллизия и вставка элемента ДО своего индекса
+            public void TestAddItem_РЎollisionBefore() // РљРѕР»Р»РёР·РёСЏ Рё РІСЃС‚Р°РІРєР° СЌР»РµРјРµРЅС‚Р° Р”Рћ СЃРІРѕРµРіРѕ РёРЅРґРµРєСЃР°
             {
                 // Arrange
-                MyHashTable<Shape> hashTable = new MyHashTable<Shape>(10, 1); // чтобы увеличить возможность коллизии, увеличим коэффициент заполненности таблицы
-                int place; // место, куда встанет элемент, претерпевший коллизию
-                Shape temp = new Shape(); // с помощью данной переменной запомним этот коллизионный элемент
+                MyHashTable<Shape> hashTable = new MyHashTable<Shape>(10, 1); // С‡С‚РѕР±С‹ СѓРІРµР»РёС‡РёС‚СЊ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ РєРѕР»Р»РёР·РёРё, СѓРІРµР»РёС‡РёРј РєРѕСЌС„С„РёС†РёРµРЅС‚ Р·Р°РїРѕР»РЅРµРЅРЅРѕСЃС‚Рё С‚Р°Р±Р»РёС†С‹
+                int place; // РјРµСЃС‚Рѕ, РєСѓРґР° РІСЃС‚Р°РЅРµС‚ СЌР»РµРјРµРЅС‚, РїСЂРµС‚РµСЂРїРµРІС€РёР№ РєРѕР»Р»РёР·РёСЋ
+                Shape temp = new Shape(); // СЃ РїРѕРјРѕС‰СЊСЋ РґР°РЅРЅРѕР№ РїРµСЂРµРјРµРЅРЅРѕР№ Р·Р°РїРѕРјРЅРёРј СЌС‚РѕС‚ РєРѕР»Р»РёР·РёРѕРЅРЅС‹Р№ СЌР»РµРјРµРЅС‚
 
                 // Act
                 while (true)
                 {
-                    // создаём новый элемент для добавления
+                    // СЃРѕР·РґР°С‘Рј РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ
                     Shape shape = new Shape();
                     shape.RandomInit();
-                    // произошла коллизия:
+                    // РїСЂРѕРёР·РѕС€Р»Р° РєРѕР»Р»РёР·РёСЏ:
                     if (hashTable.flags[hashTable.GetIndex(shape)] == 1)
                     {
-                        // ищем место, куда в итоге встанет добавляемый элемент
+                        // РёС‰РµРј РјРµСЃС‚Рѕ, РєСѓРґР° РІ РёС‚РѕРіРµ РІСЃС‚Р°РЅРµС‚ РґРѕР±Р°РІР»СЏРµРјС‹Р№ СЌР»РµРјРµРЅС‚
                         place = hashTable.SearchPlace(hashTable.GetIndex(shape));
-                        // если он встал после предназначенного ему места, то выходим из цикла
+                        // РµСЃР»Рё РѕРЅ РІСЃС‚Р°Р» РїРѕСЃР»Рµ РїСЂРµРґРЅР°Р·РЅР°С‡РµРЅРЅРѕРіРѕ РµРјСѓ РјРµСЃС‚Р°, С‚Рѕ РІС‹С…РѕРґРёРј РёР· С†РёРєР»Р°
                         if (place < hashTable.GetIndex(shape))
                         {
                             temp = shape;
                             break;
                         }
                     }
-                    // добавляем очередной элемент
+                    // РґРѕР±Р°РІР»СЏРµРј РѕС‡РµСЂРµРґРЅРѕР№ СЌР»РµРјРµРЅС‚
                     hashTable.AddItem(shape);
                 }
 
                 // Assert
-                Assert.IsTrue(hashTable.flags[hashTable.GetIndex(temp)] == 1); // назначенное место найденного элемента для нашего тестируемого случая оказалось занято
-                Assert.IsTrue(place < hashTable.GetIndex(temp)); // встал после назначенного места
+                Assert.IsTrue(hashTable.flags[hashTable.GetIndex(temp)] == 1); // РЅР°Р·РЅР°С‡РµРЅРЅРѕРµ РјРµСЃС‚Рѕ РЅР°Р№РґРµРЅРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РґР»СЏ РЅР°С€РµРіРѕ С‚РµСЃС‚РёСЂСѓРµРјРѕРіРѕ СЃР»СѓС‡Р°СЏ РѕРєР°Р·Р°Р»РѕСЃСЊ Р·Р°РЅСЏС‚Рѕ
+                Assert.IsTrue(place < hashTable.GetIndex(temp)); // РІСЃС‚Р°Р» РїРѕСЃР»Рµ РЅР°Р·РЅР°С‡РµРЅРЅРѕРіРѕ РјРµСЃС‚Р°
             }
 
             [TestMethod]
-            public void TestAddItem_СollisionBefore_NotBegin() // Коллизия и вставка элемента ДО своего индексаб но не в начало таблицы
+            public void TestAddItem_РЎollisionBefore_NotBegin() // РљРѕР»Р»РёР·РёСЏ Рё РІСЃС‚Р°РІРєР° СЌР»РµРјРµРЅС‚Р° Р”Рћ СЃРІРѕРµРіРѕ РёРЅРґРµРєСЃР°Р± РЅРѕ РЅРµ РІ РЅР°С‡Р°Р»Рѕ С‚Р°Р±Р»РёС†С‹
             {
                 // Arrange
-                MyHashTable<Shape> hashTable = new MyHashTable<Shape>(10, 1); // чтобы увеличить возможность коллизии, увеличим коэффициент заполненности таблицы
-                int place; // место, куда встанет элемент, претерпевший коллизию
-                Shape temp = new Shape(); // с помощью данной переменной запомним этот коллизионный элемент
+                MyHashTable<Shape> hashTable = new MyHashTable<Shape>(10, 1); // С‡С‚РѕР±С‹ СѓРІРµР»РёС‡РёС‚СЊ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ РєРѕР»Р»РёР·РёРё, СѓРІРµР»РёС‡РёРј РєРѕСЌС„С„РёС†РёРµРЅС‚ Р·Р°РїРѕР»РЅРµРЅРЅРѕСЃС‚Рё С‚Р°Р±Р»РёС†С‹
+                int place; // РјРµСЃС‚Рѕ, РєСѓРґР° РІСЃС‚Р°РЅРµС‚ СЌР»РµРјРµРЅС‚, РїСЂРµС‚РµСЂРїРµРІС€РёР№ РєРѕР»Р»РёР·РёСЋ
+                Shape temp = new Shape(); // СЃ РїРѕРјРѕС‰СЊСЋ РґР°РЅРЅРѕР№ РїРµСЂРµРјРµРЅРЅРѕР№ Р·Р°РїРѕРјРЅРёРј СЌС‚РѕС‚ РєРѕР»Р»РёР·РёРѕРЅРЅС‹Р№ СЌР»РµРјРµРЅС‚
 
                 // Act
                 while (true)
                 {
-                    // создаём новый элемент для добавления
+                    // СЃРѕР·РґР°С‘Рј РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ
                     Shape shape = new Shape();
                     shape.RandomInit();
-                    // произошла коллизия:
+                    // РїСЂРѕРёР·РѕС€Р»Р° РєРѕР»Р»РёР·РёСЏ:
                     if (hashTable.flags[hashTable.GetIndex(shape)] == 1)
                     {
-                        // ищем место, куда в итоге встанет добавляемый элемент
+                        // РёС‰РµРј РјРµСЃС‚Рѕ, РєСѓРґР° РІ РёС‚РѕРіРµ РІСЃС‚Р°РЅРµС‚ РґРѕР±Р°РІР»СЏРµРјС‹Р№ СЌР»РµРјРµРЅС‚
                         place = hashTable.SearchPlace(hashTable.GetIndex(shape));
-                        // если он встал после предназначенного ему места, то выходим из цикла
+                        // РµСЃР»Рё РѕРЅ РІСЃС‚Р°Р» РїРѕСЃР»Рµ РїСЂРµРґРЅР°Р·РЅР°С‡РµРЅРЅРѕРіРѕ РµРјСѓ РјРµСЃС‚Р°, С‚Рѕ РІС‹С…РѕРґРёРј РёР· С†РёРєР»Р°
                         if (place < hashTable.GetIndex(shape) && place != 0)
                         {
                             temp = shape;
                             break;
                         }
                     }
-                    // добавляем очередной элемент
+                    // РґРѕР±Р°РІР»СЏРµРј РѕС‡РµСЂРµРґРЅРѕР№ СЌР»РµРјРµРЅС‚
                     hashTable.AddItem(shape);
                 }
 
                 // Assert
-                Assert.IsTrue(hashTable.flags[hashTable.GetIndex(temp)] == 1); // назначенное место найденного элемента для нашего тестируемого случая оказалось занято
-                Assert.IsTrue(place < hashTable.GetIndex(temp)); // встал после назначенного места
+                Assert.IsTrue(hashTable.flags[hashTable.GetIndex(temp)] == 1); // РЅР°Р·РЅР°С‡РµРЅРЅРѕРµ РјРµСЃС‚Рѕ РЅР°Р№РґРµРЅРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РґР»СЏ РЅР°С€РµРіРѕ С‚РµСЃС‚РёСЂСѓРµРјРѕРіРѕ СЃР»СѓС‡Р°СЏ РѕРєР°Р·Р°Р»РѕСЃСЊ Р·Р°РЅСЏС‚Рѕ
+                Assert.IsTrue(place < hashTable.GetIndex(temp)); // РІСЃС‚Р°Р» РїРѕСЃР»Рµ РЅР°Р·РЅР°С‡РµРЅРЅРѕРіРѕ РјРµСЃС‚Р°
             }
 
             [TestMethod]
-            public void TestFindExistItem_СollisionAfter() // Коллизия и поиск элемента, вставленного ПОСЛЕ своего индекса
+            public void TestFindExistItem_РЎollisionAfter() // РљРѕР»Р»РёР·РёСЏ Рё РїРѕРёСЃРє СЌР»РµРјРµРЅС‚Р°, РІСЃС‚Р°РІР»РµРЅРЅРѕРіРѕ РџРћРЎР›Р• СЃРІРѕРµРіРѕ РёРЅРґРµРєСЃР°
             {
                 // Arrange
-                MyHashTable<Shape> hashTable = new MyHashTable<Shape>(10, 1); // чтобы увеличить возможность коллизии, увеличим коэффициент заполненности таблицы
-                int place; // место, куда встанет элемент, претерпевший коллизию
-                Shape temp = new Shape(); // с помощью данной переменной запомним этот коллизионный элемент
+                MyHashTable<Shape> hashTable = new MyHashTable<Shape>(10, 1); // С‡С‚РѕР±С‹ СѓРІРµР»РёС‡РёС‚СЊ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ РєРѕР»Р»РёР·РёРё, СѓРІРµР»РёС‡РёРј РєРѕСЌС„С„РёС†РёРµРЅС‚ Р·Р°РїРѕР»РЅРµРЅРЅРѕСЃС‚Рё С‚Р°Р±Р»РёС†С‹
+                int place; // РјРµСЃС‚Рѕ, РєСѓРґР° РІСЃС‚Р°РЅРµС‚ СЌР»РµРјРµРЅС‚, РїСЂРµС‚РµСЂРїРµРІС€РёР№ РєРѕР»Р»РёР·РёСЋ
+                Shape temp = new Shape(); // СЃ РїРѕРјРѕС‰СЊСЋ РґР°РЅРЅРѕР№ РїРµСЂРµРјРµРЅРЅРѕР№ Р·Р°РїРѕРјРЅРёРј СЌС‚РѕС‚ РєРѕР»Р»РёР·РёРѕРЅРЅС‹Р№ СЌР»РµРјРµРЅС‚
 
                 // Act
                 while (true)
                 {
-                    // создаём новый элемент для добавления
+                    // СЃРѕР·РґР°С‘Рј РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ
                     Shape shape = new Shape();
                     shape.RandomInit();
-                    // произошла коллизия:
+                    // РїСЂРѕРёР·РѕС€Р»Р° РєРѕР»Р»РёР·РёСЏ:
                     if (hashTable.flags[hashTable.GetIndex(shape)] == 1)
                     {
-                        // ищем место, куда в итоге встанет добавляемый элемент
+                        // РёС‰РµРј РјРµСЃС‚Рѕ, РєСѓРґР° РІ РёС‚РѕРіРµ РІСЃС‚Р°РЅРµС‚ РґРѕР±Р°РІР»СЏРµРјС‹Р№ СЌР»РµРјРµРЅС‚
                         place = hashTable.SearchPlace(hashTable.GetIndex(shape));
-                        // если он встал после предназначенного ему места, то выходим из цикла
+                        // РµСЃР»Рё РѕРЅ РІСЃС‚Р°Р» РїРѕСЃР»Рµ РїСЂРµРґРЅР°Р·РЅР°С‡РµРЅРЅРѕРіРѕ РµРјСѓ РјРµСЃС‚Р°, С‚Рѕ РІС‹С…РѕРґРёРј РёР· С†РёРєР»Р°
                         if (place > hashTable.GetIndex(shape))
                         {
                             hashTable.AddItem(shape);
@@ -790,34 +790,34 @@ namespace TestEvent
                             break;
                         }
                     }
-                    // добавляем очередной элемент
+                    // РґРѕР±Р°РІР»СЏРµРј РѕС‡РµСЂРµРґРЅРѕР№ СЌР»РµРјРµРЅС‚
                     hashTable.AddItem(shape);
                 }
 
                 // Assert
-                Assert.IsTrue(hashTable.FindItem(temp) > hashTable.GetIndex(temp)); // Поиск выдаст индекс после назначенного места
+                Assert.IsTrue(hashTable.FindItem(temp) > hashTable.GetIndex(temp)); // РџРѕРёСЃРє РІС‹РґР°СЃС‚ РёРЅРґРµРєСЃ РїРѕСЃР»Рµ РЅР°Р·РЅР°С‡РµРЅРЅРѕРіРѕ РјРµСЃС‚Р°
             }
 
             [TestMethod]
-            public void TestFindExistItem_СollisionBefore() // Коллизия и поиск элемента, вставленного ДО своего индекса
+            public void TestFindExistItem_РЎollisionBefore() // РљРѕР»Р»РёР·РёСЏ Рё РїРѕРёСЃРє СЌР»РµРјРµРЅС‚Р°, РІСЃС‚Р°РІР»РµРЅРЅРѕРіРѕ Р”Рћ СЃРІРѕРµРіРѕ РёРЅРґРµРєСЃР°
             {
                 // Arrange
-                MyHashTable<Shape> hashTable = new MyHashTable<Shape>(10, 1); // чтобы увеличить возможность коллизии, увеличим коэффициент заполненности таблицы
-                int place; // место, куда встанет элемент, претерпевший коллизию
-                Shape temp = new Shape(); // с помощью данной переменной запомним этот коллизионный элемент
+                MyHashTable<Shape> hashTable = new MyHashTable<Shape>(10, 1); // С‡С‚РѕР±С‹ СѓРІРµР»РёС‡РёС‚СЊ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ РєРѕР»Р»РёР·РёРё, СѓРІРµР»РёС‡РёРј РєРѕСЌС„С„РёС†РёРµРЅС‚ Р·Р°РїРѕР»РЅРµРЅРЅРѕСЃС‚Рё С‚Р°Р±Р»РёС†С‹
+                int place; // РјРµСЃС‚Рѕ, РєСѓРґР° РІСЃС‚Р°РЅРµС‚ СЌР»РµРјРµРЅС‚, РїСЂРµС‚РµСЂРїРµРІС€РёР№ РєРѕР»Р»РёР·РёСЋ
+                Shape temp = new Shape(); // СЃ РїРѕРјРѕС‰СЊСЋ РґР°РЅРЅРѕР№ РїРµСЂРµРјРµРЅРЅРѕР№ Р·Р°РїРѕРјРЅРёРј СЌС‚РѕС‚ РєРѕР»Р»РёР·РёРѕРЅРЅС‹Р№ СЌР»РµРјРµРЅС‚
 
                 // Act
                 while (true)
                 {
-                    // создаём новый элемент для добавления
+                    // СЃРѕР·РґР°С‘Рј РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ
                     Shape shape = new Shape();
                     shape.RandomInit();
-                    // произошла коллизия:
+                    // РїСЂРѕРёР·РѕС€Р»Р° РєРѕР»Р»РёР·РёСЏ:
                     if (hashTable.flags[hashTable.GetIndex(shape)] == 1)
                     {
-                        // ищем место, куда в итоге встанет добавляемый элемент
+                        // РёС‰РµРј РјРµСЃС‚Рѕ, РєСѓРґР° РІ РёС‚РѕРіРµ РІСЃС‚Р°РЅРµС‚ РґРѕР±Р°РІР»СЏРµРјС‹Р№ СЌР»РµРјРµРЅС‚
                         place = hashTable.SearchPlace(hashTable.GetIndex(shape));
-                        // если он встал после предназначенного ему места, то выходим из цикла
+                        // РµСЃР»Рё РѕРЅ РІСЃС‚Р°Р» РїРѕСЃР»Рµ РїСЂРµРґРЅР°Р·РЅР°С‡РµРЅРЅРѕРіРѕ РµРјСѓ РјРµСЃС‚Р°, С‚Рѕ РІС‹С…РѕРґРёРј РёР· С†РёРєР»Р°
                         if (place < hashTable.GetIndex(shape))
                         {
                             hashTable.AddItem(shape);
@@ -825,34 +825,34 @@ namespace TestEvent
                             break;
                         }
                     }
-                    // добавляем очередной элемент
+                    // РґРѕР±Р°РІР»СЏРµРј РѕС‡РµСЂРµРґРЅРѕР№ СЌР»РµРјРµРЅС‚
                     hashTable.AddItem(shape);
                 }
 
                 // Assert
-                Assert.IsTrue(hashTable.FindItem(temp) < hashTable.GetIndex(temp)); // Поиск выдаст индекс до назначенного места
+                Assert.IsTrue(hashTable.FindItem(temp) < hashTable.GetIndex(temp)); // РџРѕРёСЃРє РІС‹РґР°СЃС‚ РёРЅРґРµРєСЃ РґРѕ РЅР°Р·РЅР°С‡РµРЅРЅРѕРіРѕ РјРµСЃС‚Р°
             }
 
             [TestMethod]
-            public void TestFindExistItem_СollisionBefore_NotZeroAndNotFirstPosition() // Коллизия и поиск элемента, вставленного ДО своего индекса, но не в первые две позиции таблицы
+            public void TestFindExistItem_РЎollisionBefore_NotZeroAndNotFirstPosition() // РљРѕР»Р»РёР·РёСЏ Рё РїРѕРёСЃРє СЌР»РµРјРµРЅС‚Р°, РІСЃС‚Р°РІР»РµРЅРЅРѕРіРѕ Р”Рћ СЃРІРѕРµРіРѕ РёРЅРґРµРєСЃР°, РЅРѕ РЅРµ РІ РїРµСЂРІС‹Рµ РґРІРµ РїРѕР·РёС†РёРё С‚Р°Р±Р»РёС†С‹
             {
                 // Arrange
-                MyHashTable<Shape> hashTable = new MyHashTable<Shape>(1000, 1); // чтобы увеличить возможность коллизии, увеличим коэффициент заполненности таблицы
-                int place; // место, куда встанет элемент, претерпевший коллизию
-                Shape temp = new Shape(); // с помощью данной переменной запомним этот коллизионный элемент
+                MyHashTable<Shape> hashTable = new MyHashTable<Shape>(1000, 1); // С‡С‚РѕР±С‹ СѓРІРµР»РёС‡РёС‚СЊ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ РєРѕР»Р»РёР·РёРё, СѓРІРµР»РёС‡РёРј РєРѕСЌС„С„РёС†РёРµРЅС‚ Р·Р°РїРѕР»РЅРµРЅРЅРѕСЃС‚Рё С‚Р°Р±Р»РёС†С‹
+                int place; // РјРµСЃС‚Рѕ, РєСѓРґР° РІСЃС‚Р°РЅРµС‚ СЌР»РµРјРµРЅС‚, РїСЂРµС‚РµСЂРїРµРІС€РёР№ РєРѕР»Р»РёР·РёСЋ
+                Shape temp = new Shape(); // СЃ РїРѕРјРѕС‰СЊСЋ РґР°РЅРЅРѕР№ РїРµСЂРµРјРµРЅРЅРѕР№ Р·Р°РїРѕРјРЅРёРј СЌС‚РѕС‚ РєРѕР»Р»РёР·РёРѕРЅРЅС‹Р№ СЌР»РµРјРµРЅС‚
 
                 // Act
                 while (true)
                 {
-                    // создаём новый элемент для добавления
+                    // СЃРѕР·РґР°С‘Рј РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ
                     Shape shape = new Shape();
                     shape.RandomInit();
-                    // произошла коллизия:
+                    // РїСЂРѕРёР·РѕС€Р»Р° РєРѕР»Р»РёР·РёСЏ:
                     if (hashTable.flags[hashTable.GetIndex(shape)] == 1)
                     {
-                        // ищем место, куда в итоге встанет добавляемый элемент
+                        // РёС‰РµРј РјРµСЃС‚Рѕ, РєСѓРґР° РІ РёС‚РѕРіРµ РІСЃС‚Р°РЅРµС‚ РґРѕР±Р°РІР»СЏРµРјС‹Р№ СЌР»РµРјРµРЅС‚
                         place = hashTable.SearchPlace(hashTable.GetIndex(shape));
-                        // если он встал после предназначенного ему места, то выходим из цикла
+                        // РµСЃР»Рё РѕРЅ РІСЃС‚Р°Р» РїРѕСЃР»Рµ РїСЂРµРґРЅР°Р·РЅР°С‡РµРЅРЅРѕРіРѕ РµРјСѓ РјРµСЃС‚Р°, С‚Рѕ РІС‹С…РѕРґРёРј РёР· С†РёРєР»Р°
                         if (place < hashTable.GetIndex(shape) && place > 1)
                         {
                             hashTable.AddItem(shape);
@@ -860,35 +860,35 @@ namespace TestEvent
                             break;
                         }
                     }
-                    // добавляем очередной элемент
+                    // РґРѕР±Р°РІР»СЏРµРј РѕС‡РµСЂРµРґРЅРѕР№ СЌР»РµРјРµРЅС‚
                     hashTable.AddItem(shape);
                 }
                 //hashTable.RemoveData(hashTable.table[hashTable.GetIndex(temp) - 5]);
 
                 // Assert
-                Assert.IsTrue(place < hashTable.GetIndex(temp) && place > 1); // Поиск выдаст индекс до назначенного места (но не первые две позиции таблицы)
+                Assert.IsTrue(place < hashTable.GetIndex(temp) && place > 1); // РџРѕРёСЃРє РІС‹РґР°СЃС‚ РёРЅРґРµРєСЃ РґРѕ РЅР°Р·РЅР°С‡РµРЅРЅРѕРіРѕ РјРµСЃС‚Р° (РЅРѕ РЅРµ РїРµСЂРІС‹Рµ РґРІРµ РїРѕР·РёС†РёРё С‚Р°Р±Р»РёС†С‹)
             }
 
             [TestMethod]
-            public void TestFindNotExistItem_Сollision() // Поиск не существующего элемента, претерпевшего коллизию
+            public void TestFindNotExistItem_РЎollision() // РџРѕРёСЃРє РЅРµ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РµРіРѕ СЌР»РµРјРµРЅС‚Р°, РїСЂРµС‚РµСЂРїРµРІС€РµРіРѕ РєРѕР»Р»РёР·РёСЋ
             {
                 // Arrange
-                MyHashTable<Shape> hashTable = new MyHashTable<Shape>(100, 1.5); // увеличим коэффициент заполненности таблицы, чтобы заполнить её полностью, а затем искать в полностью заполненной таблице не существующий элемент
-                Shape notExistShape = new Shape("Звёздочка", 777); // создадим не существующий элемент, который будем искать
+                MyHashTable<Shape> hashTable = new MyHashTable<Shape>(100, 1.5); // СѓРІРµР»РёС‡РёРј РєРѕСЌС„С„РёС†РёРµРЅС‚ Р·Р°РїРѕР»РЅРµРЅРЅРѕСЃС‚Рё С‚Р°Р±Р»РёС†С‹, С‡С‚РѕР±С‹ Р·Р°РїРѕР»РЅРёС‚СЊ РµС‘ РїРѕР»РЅРѕСЃС‚СЊСЋ, Р° Р·Р°С‚РµРј РёСЃРєР°С‚СЊ РІ РїРѕР»РЅРѕСЃС‚СЊСЋ Р·Р°РїРѕР»РЅРµРЅРЅРѕР№ С‚Р°Р±Р»РёС†Рµ РЅРµ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёР№ СЌР»РµРјРµРЅС‚
+                Shape notExistShape = new Shape("Р—РІС‘Р·РґРѕС‡РєР°", 777); // СЃРѕР·РґР°РґРёРј РЅРµ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёР№ СЌР»РµРјРµРЅС‚, РєРѕС‚РѕСЂС‹Р№ Р±СѓРґРµРј РёСЃРєР°С‚СЊ
 
                 // Act
-                // ПОЛНОСТЬЮ заполняем таблицу. Добиваемся того, чтобы при поиске несуществующего элемента происходила коллизия в ПОЛНОСТЬЮ заполненной таблице
+                // РџРћР›РќРћРЎРўР¬Р® Р·Р°РїРѕР»РЅСЏРµРј С‚Р°Р±Р»РёС†Сѓ. Р”РѕР±РёРІР°РµРјСЃСЏ С‚РѕРіРѕ, С‡С‚РѕР±С‹ РїСЂРё РїРѕРёСЃРєРµ РЅРµСЃСѓС‰РµСЃС‚РІСѓСЋС‰РµРіРѕ СЌР»РµРјРµРЅС‚Р° РїСЂРѕРёСЃС…РѕРґРёР»Р° РєРѕР»Р»РёР·РёСЏ РІ РџРћР›РќРћРЎРўР¬Р® Р·Р°РїРѕР»РЅРµРЅРЅРѕР№ С‚Р°Р±Р»РёС†Рµ
                 while (hashTable.Capacity != hashTable.Count)
                 {
-                    // создаём новый элемент для добавления
+                    // СЃРѕР·РґР°С‘Рј РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ
                     Shape shape = new Shape();
                     shape.RandomInit();
-                    // добавляем
+                    // РґРѕР±Р°РІР»СЏРµРј
                     hashTable.AddItem(shape);
                 }
 
                 // Assert
-                Assert.IsTrue(hashTable.FindItem(notExistShape) == -1); // Поиск выдаст -1, так как элемента в таблице нет
+                Assert.IsTrue(hashTable.FindItem(notExistShape) == -1); // РџРѕРёСЃРє РІС‹РґР°СЃС‚ -1, С‚Р°Рє РєР°Рє СЌР»РµРјРµРЅС‚Р° РІ С‚Р°Р±Р»РёС†Рµ РЅРµС‚
             }
         }
     }
