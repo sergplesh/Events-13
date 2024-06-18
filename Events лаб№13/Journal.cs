@@ -11,8 +11,7 @@ namespace Events_лаб_13
     /// <summary>
     /// Журнал с записями
     /// </summary>
-    /// <typeparam name="T">обобщённый тип</typeparam>
-    public class Journal<T> where T : IInit, ICloneable, IComparable, new()
+    public class Journal
     {
         /// <summary>
         /// Список записей
@@ -30,7 +29,7 @@ namespace Events_лаб_13
         /// <param name="args">данные для обработки события</param>
         public void WriteRecord(object source, CollectionHandlerEventArgs args) //Обработчик событий
         {
-            MyObservableCollection<T>? collection = source as MyObservableCollection<T>; // приведение source к типу MyObservableCollection
+            MyObservableCollection<Shape> collection = source as MyObservableCollection<Shape>; // приведение source к типу MyObservableCollection<Shape>
             string collectionName = collection.CollectionName; // достаём название коллекции
             journal.Add(new JournalEntry(collectionName, args.ChangeType, args.Item.ToString()));
         }
@@ -49,6 +48,28 @@ namespace Events_лаб_13
             {
                 Console.WriteLine(item); // печатаем запись
             }
+        }
+
+        /// <summary>
+        /// копирование записей для определённой коллекции из другого журнала
+        /// </summary>
+        /// <param name="other"></param>
+        /// <param name="collection"></param>
+        public void CopyJournalEntry(Journal other, MyObservableCollection<Shape> collection)
+        {
+            foreach (JournalEntry item in other.journal)
+            {
+                if (item.CollectionName == collection.CollectionName)
+                    this.journal.Add(item);
+            }
+        }
+        
+        /// <summary>
+         /// очистка журнала от всех записей
+         /// </summary>
+        public void Clear()
+        {
+            this.journal.Clear();
         }
     }
 }

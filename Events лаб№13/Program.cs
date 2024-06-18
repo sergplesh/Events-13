@@ -1,4 +1,5 @@
 ﻿using GeometrucShapeCarLibrary;
+using System.ComponentModel.Design;
 using System.Runtime.InteropServices;
 
 namespace Events_лаб_13
@@ -43,7 +44,7 @@ namespace Events_лаб_13
                     }
                 case 2:
                     {
-                        InitShape();
+                        shape = InitShape();
                         break;
                     }
             }
@@ -71,9 +72,8 @@ namespace Events_лаб_13
                 Console.WriteLine("Таблица пустая");
             else
             {
-                Console.WriteLine("Введите элемент для поиска");
-                Shape shape = new Shape();
-                shape.Init();
+                // Вводим фигуру, которую хотите удалить
+                Shape shape = InitShape("Введите фигуру, которую хотите удалить");
                 bool ok = collection.Remove(shape);
                 if (ok)
                     Console.WriteLine($"Элемент удален");
@@ -94,18 +94,22 @@ namespace Events_лаб_13
                 Console.WriteLine("Таблица пустая");
             else
             {
-                // Вводим позицию элемента, который хотим изменить
-                int index = EnterNumber.EnterIntNumber("Введите позицию элемента, который хотим изменить", 1); // вводим позицию
-                // Вводим фигуру, на которую хотите поменять выбранную
-                Shape changed = InitShape("Введите фигуру, на которую хотите поменять выбранную");
-                try
+                // Вводим фигуру, которую хотите поменять
+                Shape item = InitShape("Введите фигуру, которую хотите поменять");
+                if (!collection.Contains(item)) Console.WriteLine("Введённого элемента нет в коллекции"); // если изменяемого элемента нет в коллекции, то не запрашиваем дальнейшего ввода
+                else
                 {
-                    if (collection[index - 1] != null) collection[index - 1] = changed;
-                    else Console.WriteLine("Вы не можете изменить нулевую ссылку");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
+                    // Вводим фигуру, на которую хотите поменять выбранную
+                    Shape changed = InitShape("Введите фигуру, на которую хотите поменять выбранную");
+                    try
+                    {
+                        collection[item] = changed; // меняем ссылку
+                        Console.WriteLine("Ссылка изменена"); // уведомляем о совершении действия
+                    }
+                    catch (Exception ex) // если произойдёт исключение
+                    {
+                        Console.WriteLine(ex.Message); // сообщение исключения
+                    }
                 }
             }
             return collection;
@@ -177,6 +181,7 @@ namespace Events_лаб_13
             shape.Init(); // задаем параметры для фигуры
             return shape;
         }
+
         static void Main(string[] args)
         {
             // создаём две коллекции
@@ -184,8 +189,8 @@ namespace Events_лаб_13
             MyObservableCollection<Shape> secondCollection = new MyObservableCollection<Shape>("Second", 0);
 
             // создаём два журнала: один - для первой коллекции, другой - для второй
-            Journal<Shape> firstJournal = new Journal<Shape>();
-            Journal<Shape> secondJournal = new Journal<Shape>();
+            Journal firstJournal = new Journal();
+            Journal secondJournal = new Journal();
 
             // ПОДПИСКИ
             // один объект Journal подписать на события CollectionCountChanged и CollectionReferenceChanged из первой коллекции,
@@ -210,12 +215,26 @@ namespace Events_лаб_13
                 Console.WriteLine("8. Удалить элемент из второй коллекции");
                 Console.WriteLine("9. Изменить элемент из первой коллекции");
                 Console.WriteLine("10. Изменить элемент из второй коллекции");
+                Console.WriteLine("11. Вывести элементы из первой коллекции");
+                Console.WriteLine("12. Вывести элементы из второй коллекции");
                 Console.WriteLine("0. Выход");
                 answer = EnterNumber.EnterIntNumber("Выберите пункт меню", 0);
                 switch (answer)
                 {
                     case 1: // первый выбор Формирование первой коллекции
                         {
+                            //очищаем журналы с записями для первой коллекции
+                            firstJournal.Clear();
+                            secondJournal.Clear();
+                            //создаём вспомогательный журнал, куда перепишем записи для второй коллекции из второго журнала
+                            Journal temp = new Journal();
+                            temp.CopyJournalEntry(secondJournal, secondCollection); // переписываем
+                            //меняем ссылку
+                            secondJournal = temp;
+                            // снова подписываемся на второй журнал
+                            firstCollection.CollectionReferenceChanged += secondJournal.WriteRecord; // Подписка обработчика события (запись в первый журнал) на событие первой коллекции (изменение ссылки)
+                            secondCollection.CollectionReferenceChanged += secondJournal.WriteRecord; // Подписка обработчика события (запись во второй журнал) на событие второй коллекции (изменение ссылки)
+                            // формируем первую коллекцию
                             firstCollection = CreateCollection(firstCollection);
                             Console.WriteLine("Полученная первая коллекция");
                             firstCollection.Print();
@@ -223,6 +242,17 @@ namespace Events_лаб_13
                         }
                     case 2: // второй выбор Формирование второй коллекции
                         {
+                            // очищаем журналы с записями для второй коллекции
+                            secondJournal.Clear();
+                            // создаём вспомогательный журнал, куда перепишем записи для первой коллекции из второго журнала
+                            Journal temp = new Journal();
+                            temp.CopyJournalEntry(secondJournal, firstCollection); // переписываем
+                            // меняем ссылку
+                            secondJournal = temp;
+                            // снова подписываемся на второй журнал
+                            firstCollection.CollectionReferenceChanged += secondJournal.WriteRecord; // Подписка обработчика события (запись в первый журнал) на событие первой коллекции (изменение ссылки)
+                            secondCollection.CollectionReferenceChanged += secondJournal.WriteRecord; // Подписка обработчика события (запись во второй журнал) на событие второй коллекции (изменение ссылки)
+                            // формируем вторую коллекцию
                             secondCollection = CreateCollection(secondCollection);
                             Console.WriteLine("Полученная вторая коллекция");
                             secondCollection.Print();
@@ -279,6 +309,18 @@ namespace Events_лаб_13
                         {
                             secondCollection = ChangeItemCollection(secondCollection);
                             Console.WriteLine("Полученная вторая коллекция:");
+                            secondCollection.Print();
+                            break;
+                        }
+                    case 11: // одиннадцатый выбор вывод первой коллекции
+                        {
+                            Console.WriteLine("первая коллекция:");
+                            firstCollection.Print();
+                            break;
+                        }
+                    case 12: // двенадцатый выбор вывод второй коллекции
+                        {
+                            Console.WriteLine("вторая коллекция:");
                             secondCollection.Print();
                             break;
                         }

@@ -68,14 +68,14 @@ namespace Events_лаб_13
         /// <param name="item">элемент</param>
         public new void Add(T item)
         {
-            base.Add(item); // добавление элемента в коллекцию 
-            OnCollectionCountChanged(this, new CollectionHandlerEventArgs("добавлен элемент", (T)item.Clone()));  // вызов события изменения количества объектов в коллекции
+            bool add = AddItem(item); // добавление элемента в коллекцию 
+            if (add) OnCollectionCountChanged(this, new CollectionHandlerEventArgs("добавлен элемент", (T)item.Clone()));  // вызов события изменения количества объектов в коллекции
         }
 
         /// <summary>
         /// Удаление элемента
         /// </summary>
-        /// <param name="item">элемент</param>
+        /// <param name="item">удаляемый элемент</param>
         /// <returns></returns>
         public new bool Remove(T item)
         {
@@ -86,27 +86,41 @@ namespace Events_лаб_13
         }
 
         /// <summary>
-        /// Индексатор для коллекции
+        /// Индексатор для коллекции.
         /// </summary>
-        /// <param name="index">индекс элемента</param>
-        /// <returns>элемент по индексу</returns>
-        /// <exception cref="IndexOutOfRangeException">выход за пределы индексирования</exception>
-        public T this[int index]
+        /// <param name="item">значение искомого злемента.</param>
+        /// <returns>Найденный элемент или исключение, если элемент не найден.</returns>
+        public T this[T item]
         {
-            get
+            get // чтение значения элемента коллекции
             {
-                if (index >= 0 && index < table.Length) // заданный индекс находится в пределах индексирования
-                    return table[index]; // возвращаем значение элемента по индексу
-                else throw new IndexOutOfRangeException("Индекс выходит за пределы коллекции"); // вышли за пределы индексации
-            }
-            set
-            {
-                if (index >= 0 && index < table.Length) // заданный индекс находится в пределах индексирования
+                int index = FindItem(item); // Поиск индекса
+                if (index < 0) // элемента нет в коллекции
                 {
-                    table[index] = value; // меняем ссылку на другой объект
-                    OnCollectionReferenceChanged(this, new CollectionHandlerEventArgs("изменён элемент на", (T)value.Clone())); // вызов события изменения ссылки на другой объект
+                    throw new ArgumentException("Изменяемый элемент не найден в коллекции");
                 }
-                else throw new IndexOutOfRangeException("Индекс выходит за пределы коллекции"); // вышли за пределы индексации
+                else return table[index]; // возвращаем значения элемента
+            }
+            set // установка другого значения элемента коллекции
+            {
+                if (!Contains(value)) // элемента, на который хотим поменять, ещё нет в коллекции
+                {
+                    int index = FindItem(item); // Поиск индекса старого элемента
+                    if (index >= 0) // изменяемый элемент найден
+                    {
+                        Remove(table[index]); // удаляем старый элемент
+                        Add(value);
+                        OnCollectionReferenceChanged(this, new CollectionHandlerEventArgs("изменён элемент", item.Clone())); // вызов события изменения ссылки на другой объект
+                    }
+                    else // изменяемый элемент не найден
+                    {
+                        throw new ArgumentException("Изменяемый элемент не найден в коллекции");
+                    }
+                }
+                else // элемент, на который хотим поменять, уже есть в коллекции
+                {
+                    throw new ArgumentException("Элемент, на который хотите поменять заданный, уже есть в коллекции");
+                }
             }
         }
     }
